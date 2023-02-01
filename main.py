@@ -20,7 +20,7 @@ browser_lib = Selenium()
 # Define a main() function that calls the other functions in order:
 def main():
     try:
-        print(WorkItems)
+        print(WorkItems.WorkItems)
         # open_the_website("https://robocorp.com/docs/")
         # search_for("java")
         # store_screenshot("output/screenshot.png")
