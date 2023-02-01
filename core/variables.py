@@ -17,8 +17,8 @@ class Variables:
             library = WorkItems()
             library.get_input_work_item()
             variables = library.get_work_item_variables()
-            self.search_phrase = variables['variables']
+            self.search_phrase = variables['search_phrase']
             self.section = variables['section']
             self.number_of_month = variables['number_of_month']
         except KeyError:
-            self.logger.error("set default values")
+            self.logger.error("Key error: default values has been set")
