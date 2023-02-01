@@ -1,28 +1,29 @@
 from RPA.Browser.Selenium import Selenium
-
+from RPA.Robocorp import WorkItems
 browser_lib = Selenium()
 
 
-def open_the_website(url):
-    browser_lib.open_available_browser(url)
-
-
-def search_for(term):
-    input_field = "css:input"
-    browser_lib.input_text(input_field, term)
-    browser_lib.press_keys(input_field, "ENTER")
-
-
-def store_screenshot(filename):
-    browser_lib.screenshot(filename=filename)
+# def open_the_website(url):
+#     browser_lib.open_available_browser(url)
+#
+#
+# def search_for(term):
+#     input_field = "css:input"
+#     browser_lib.input_text(input_field, term)
+#     browser_lib.press_keys(input_field, "ENTER")
+#
+#
+# def store_screenshot(filename):
+#     browser_lib.screenshot(filename=filename)
 
 
 # Define a main() function that calls the other functions in order:
 def main():
     try:
-        open_the_website("https://robocorp.com/docs/")
-        search_for("java")
-        store_screenshot("output/screenshot.png")
+        print(WorkItems)
+        # open_the_website("https://robocorp.com/docs/")
+        # search_for("java")
+        # store_screenshot("output/screenshot.png")
     finally:
         browser_lib.close_all_browsers()
 
