@@ -1,5 +1,5 @@
 from RPA.Browser.Selenium import Selenium
-from RPA.Robocorp import WorkItems
+from RPA.Robocorp.WorkItems import WorkItems
 browser_lib = Selenium()
 
 
@@ -20,7 +20,10 @@ browser_lib = Selenium()
 # Define a main() function that calls the other functions in order:
 def main():
     try:
-        print(WorkItems.WorkItems)
+        library = WorkItems()
+        library.get_input_work_item()
+        variables = library.get_work_item_variables()
+        print(variables)
         # open_the_website("https://robocorp.com/docs/")
         # search_for("java")
         # store_screenshot("output/screenshot.png")
