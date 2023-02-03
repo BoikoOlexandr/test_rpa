@@ -12,7 +12,7 @@ class Variables:
             variables = library.get_work_item_variables()
             self.search_phrase = variables['search_phrase']
             self.sections = variables['section'].split(',')
-            self.number_of_month = variables['number_of_month']
+            self.number_of_month = int(variables['number_of_month'])
             log.info("Variables has been set from work items")
         except KeyError:
             log.warn("Local run: default variables has been set")

@@ -49,10 +49,18 @@ class Bot:
 
     def choose_the_latest_news(self):
         browser_lib.select_from_list_by_value("//select[@data-testid='SearchForm-sortBy']", 'newest')
-        log.info("Latest news has been choosen")
+        log.info("Latest news has been chosen")
 
-    def get_articles(self):
-        pass
+    def set_date_range(self):
+        date_range_locator = "//button[@data-testid='search-date-dropdown-a']"
+        date_range: WebElement = browser_lib.find_element(date_range_locator)
+        date_range.click()
+        specific_date_locator = "//button[@aria-label='Specific Dates']"
+        specific_date: WebElement = browser_lib.find_element(specific_date_locator)
+        browser_lib.wait_until_page_contains_element(specific_date)
+        specific_date.click()
+
+
 
     def get_values(self):
         pass
@@ -72,7 +80,7 @@ class Bot:
             # self.enter_search_phrase()
             self.select_section()
             self.choose_the_latest_news()
-            self.get_articles()
+            self.set_date_range()
             self.store_screenshot()
         finally:
             browser_lib.close_all_browsers()
