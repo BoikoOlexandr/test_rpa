@@ -48,6 +48,10 @@ class Bot:
         return section.text.replace(numbers.text, '')
 
     def choose_the_latest_news(self):
+        browser_lib.select_from_list_by_value("//select[@data-testid='SearchForm-sortBy']", 'newest')
+        log.info("Latest news has been choosen")
+
+    def get_articles(self):
         pass
 
     def get_values(self):
@@ -68,6 +72,7 @@ class Bot:
             # self.enter_search_phrase()
             self.select_section()
             self.choose_the_latest_news()
+            self.get_articles()
             self.store_screenshot()
         finally:
             browser_lib.close_all_browsers()
