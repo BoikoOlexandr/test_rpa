@@ -41,6 +41,7 @@ class Bot:
             section_name = self._get_section_name(section)
             if section_name.lower().strip() in variables.sections:
                 section.click()
+                log.info(f"Section {section_name} has been selected")
 
     def _get_section_name(self, section) -> str:
         numbers = section.find_element(By.XPATH, 'span')
