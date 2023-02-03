@@ -1,5 +1,6 @@
 from RPA.Browser.Selenium import Selenium
 
+from core.logger.Logger import log
 from core.variables import Variables
 
 browser_lib = Selenium()
@@ -22,6 +23,7 @@ class Bot:
         browser_lib.wait_until_page_contains_element(input_field)
         browser_lib.input_text(input_field, variables.search_phrase)
         browser_lib.press_keys(input_field, "ENTER")
+        log.info(f"Search phrase {variables.search_phrase} has been entered")
 
     def select_a_news_category(self):
         pass

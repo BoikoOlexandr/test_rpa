@@ -20,3 +20,7 @@ class LoggerFormat(logging.Formatter):
             logging.CRITICAL: self.bold_red + self.fmt + self.reset
         }
 
+    def format(self, record):
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)

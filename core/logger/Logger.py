@@ -22,3 +22,4 @@ def set_stream_log():
 log = logging.getLogger("RPA")
 set_stream_log()
 set_file_log()
+log.setLevel(logging.INFO)
