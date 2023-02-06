@@ -20,4 +20,7 @@ class Article:
         description = self.description_element.text
 
     def _get_date(self):
-        return datetime.datetime.strptime(self.date_element.get_attribute('aria-label'), '%m-%d-%Y')
+        text_date = self.date_element.get_attribute('aria-label')
+        if text_date.split().__len__() == 2:
+            text_date = f'{text_date} {datetime.date.today().year}'
+        return datetime.datetime.strptime(text_date, '%B %d %Y')

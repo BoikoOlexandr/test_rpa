@@ -18,13 +18,14 @@ class Nytimes:
         self.variables = Variables()
 
     def open_the_site_by_link(self):
-        self.browser_lib.open_chrome_browser('https://www.nytimes.com/search?dropmab=false&query=Ukraine&sort=best')
-        # self.browser_lib.open_chrome_browser('https://www.nytimes.com')
+        # self.browser_lib.open_chrome_browser('https://www.nytimes.com/search?dropmab=false&query=Ukraine&sort=best')
+        self.browser_lib.open_chrome_browser('https://www.nytimes.com')
 
     def enter_search_phrase(self):
         # Site has adaptive layout. Search button has different position on small and large resolution
         search_button_locator_small_screen = '//button[@aria-label="Sections Navigation & Search"]'
         search_button_locator_large_screen = '//button[@data-test-id="search-button"]'
+
         if self.browser_lib.is_element_visible(search_button_locator_small_screen):
             self.browser_lib.click_element(search_button_locator_small_screen)
         else:
@@ -112,9 +113,6 @@ class Nytimes:
         article_element_locator = '//li[@data-testid="search-bodega-result"]/div'
         articles = self.browser_lib.find_elements(article_element_locator)
         for article in articles:
-            # date: WebElement = article
-            # date.find_element(By.XPATH, "//span")
-            # log.error(date.text)
             Article(article).save_data_to_exel()
 
     def get_values(self):
@@ -132,7 +130,7 @@ class Nytimes:
     def execute(self):
         try:
             self.open_the_site_by_link()
-            # self.enter_search_phrase()
+            self.enter_search_phrase()
             self.select_section()
             self.choose_the_latest_news()
             self.set_date_range()
