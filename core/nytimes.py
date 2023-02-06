@@ -1,16 +1,19 @@
 import datetime
+import re
 
 from RPA.Browser.Selenium import Selenium
 from dateutil.relativedelta import relativedelta
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.wait import WebDriverWait
 
+from core.articles import Article
 from core.logger.Logger import log
 from core.variables import Variables
 
 
 class Nytimes:
     def __init__(self):
+        self.count_of_articles: int = 0
         self.browser_lib = Selenium()
         self.variables = Variables()
 
@@ -80,14 +83,39 @@ class Nytimes:
 
     def _wait_while_page_loading(self):
         status_string_locator = "//p[@data-testid='SearchForm-status']"
-        self.browser_lib.wait_until_element_does_not_contain(status_string_locator, 'Loading...')
-        log.warn(self.browser_lib.get_text(status_string_locator))
+        status_text: str = self.browser_lib.get_text(status_string_locator)
+        if status_text.startswith('Loading'):
+            self.browser_lib.wait_until_element_does_not_contain(status_string_locator, status_text)
+
+    def show_all_articles(self):
+        show_more_button_locator = "//button[@data-testid='search-show-more-button']"
+        article_element_locator = '//li[@data-testid="search-bodega-result"]'
+        self._get_count_of_articles()
+        while True:
+            current_element_count = self.browser_lib.get_element_count(article_element_locator)
+            if self.count_of_articles > current_element_count:
+                self.browser_lib.click_element(show_more_button_locator)
+                WebDriverWait(self.browser_lib, 5).until_not(
+                    lambda _: self.browser_lib.get_element_count(article_element_locator) == current_element_count)
+            else:
+                break
+
+        log.info(f"Found {self.count_of_articles} articles")
+
+    def _get_count_of_articles(self):
+        status_string_locator = "//p[@data-testid='SearchForm-status']"
+        status_test: str = self.browser_lib.get_text(status_string_locator)
+        count_of_articles = re.findall('[0-9,]+', status_test)
+        self.count_of_articles = int(count_of_articles[0])
 
     def get_articles(self):
-        show_more_button_locator = "//button[@data-testid='search-show-more-button']"
-        while self.browser_lib.is_element_enabled(show_more_button_locator):
-            self.browser_lib.click_button(show_more_button_locator)
-            self._wait_while_page_loading()
+        article_element_locator = '//li[@data-testid="search-bodega-result"]/div'
+        articles = self.browser_lib.find_elements(article_element_locator)
+        for article in articles:
+            # date: WebElement = article
+            # date.find_element(By.XPATH, "//span")
+            # log.error(date.text)
+            Article(article).save_data_to_exel()
 
     def get_values(self):
         pass
@@ -108,7 +136,8 @@ class Nytimes:
             self.select_section()
             self.choose_the_latest_news()
             self.set_date_range()
-            # self.get_articles()
+            self.show_all_articles()
+            self.get_articles()
             self.store_screenshot()
         finally:
             self.browser_lib.close_all_browsers()

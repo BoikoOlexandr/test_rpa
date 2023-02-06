@@ -1,9 +1,13 @@
+from core.logger.Logger import log
 from core.nytimes import Nytimes
 
 
 def main():
-    bot = Nytimes()
-    bot.execute()
+    try:
+        bot = Nytimes()
+        bot.execute()
+    except Exception as e:
+        log.error(e)
 
 
 if __name__ == "__main__":
