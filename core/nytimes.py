@@ -1,6 +1,7 @@
 import datetime
 import os
 import re
+import shutil
 
 from RPA.Archive import Archive
 from RPA.Browser.Selenium import Selenium
@@ -16,12 +17,18 @@ from core.variables import Variables
 
 class Nytimes:
     def __init__(self):
-        os.mkdir('result')
-        os.mkdir('result/image')
+        self.prepare_work_dirs()
         self.excel = Excel()
         self.count_of_articles: int = 0
         self.browser_lib = Selenium()
         self.variables = Variables()
+
+    def prepare_work_dirs(self):
+        if os.path.isdir('result'):
+            shutil.rmtree('result')
+        os.mkdir('result')
+        os.mkdir('result/image')
+
 
     def open_the_site_by_link(self):
         self.browser_lib.open_chrome_browser('https://www.nytimes.com')
