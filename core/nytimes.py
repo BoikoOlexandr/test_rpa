@@ -3,6 +3,7 @@ import re
 
 from RPA.Browser.Selenium import Selenium
 from dateutil.relativedelta import relativedelta
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -97,6 +98,7 @@ class Nytimes:
             current_element_count = self.browser_lib.get_element_count(article_element_locator)
             if self.count_of_articles > current_element_count:
                 self.browser_lib.scroll_element_into_view(show_more_button_locator)
+                self.store_screenshot()
                 self.browser_lib.click_element(show_more_button_locator)
                 WebDriverWait(self.browser_lib, 5).until_not(
                     lambda _: self.browser_lib.get_element_count(article_element_locator) == current_element_count)
@@ -121,6 +123,9 @@ class Nytimes:
             article.download_news_picture()
             article.save_to_excel()
         log.info('Complete')
+
+    def store_screenshot(self):
+        self.browser_lib.screenshot(filename="output/screenshot.png")
 
     def execute(self):
         try:
