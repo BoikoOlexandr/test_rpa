@@ -72,5 +72,5 @@ class Article:
 
     def download_news_picture(self):
         picture_filename = str(uuid.uuid4()) + '.png'
-        self.picture_path = os.path.abspath(f"output/result/image/{picture_filename}")
-        self.picture_element.screenshot(self.picture_path)
+        self.picture_path = f"image/{picture_filename}"
+        self.picture_element.screenshot(f'result/{self.picture_path}')

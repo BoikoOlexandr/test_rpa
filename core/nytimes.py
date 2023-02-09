@@ -16,8 +16,8 @@ from core.variables import Variables
 
 class Nytimes:
     def __init__(self):
-        os.mkdir('output/result')
-        os.mkdir('output/result/image')
+        os.mkdir('result')
+        os.mkdir('result/image')
         self.excel = Excel()
         self.count_of_articles: int = 0
         self.browser_lib = Selenium()
@@ -129,11 +129,8 @@ class Nytimes:
             article.save_to_excel()
         log.info('Complete')
 
-    def store_screenshot(self):
-        self.browser_lib.screenshot(filename="output/screenshot.png")
-
     def archive_result(self):
-        Archive().archive_folder_with_zip('output/result', 'output/result.zip')
+        Archive().archive_folder_with_zip('result', 'output/result.zip', recursive=True)
 
     def execute(self):
         try:
