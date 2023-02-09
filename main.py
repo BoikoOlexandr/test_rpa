@@ -3,11 +3,11 @@ from core.nytimes import Nytimes
 
 
 def main():
-    # try:
+    try:
         bot = Nytimes()
         bot.execute()
-    # except Exception as e:
-    #     log.error(e.with_traceback())
+    except Exception as e:
+        log.error(e.with_traceback())
 
 
 if __name__ == "__main__":
