@@ -13,7 +13,7 @@ from core.variables import Variables
 class Article:
     title: str
     description: str
-    date: datetime
+    date: datetime = datetime.date.today()
     picture_path: str = ''
     count_of_search_phrase: int = 0
     has_any_amount_of_money: int = 0
