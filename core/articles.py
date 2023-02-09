@@ -23,7 +23,7 @@ class Article:
         self.description_element: WebElement = article.find_element(By.CLASS_NAME, 'css-16nhkrn')
         self.picture_element = article.find_element(By.TAG_NAME, "img")
         self.excel = excel
-        self.date: datetime = datetime.date.today()
+        self.date = datetime.datetime.today()
         self.variables = variables
 
     def get_values(self):
