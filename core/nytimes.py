@@ -17,7 +17,6 @@ from core.variables import Variables
 
 class Nytimes:
     def __init__(self):
-        self.prepare_work_dirs()
         self.excel = Excel()
         self.count_of_articles: int = 0
         self.browser_lib = Selenium()
@@ -141,6 +140,7 @@ class Nytimes:
 
     def execute(self):
         try:
+            self.prepare_work_dirs()
             self.open_the_site_by_link()
             self.enter_search_phrase()
             self.select_section()
