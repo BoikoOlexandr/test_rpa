@@ -12,7 +12,6 @@ from core.excel import Excel
 from core.logger.Logger import log
 from core.variables import Variables
 
-
 class Nytimes:
     def __init__(self):
         self.excel = Excel()
