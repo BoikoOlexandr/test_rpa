@@ -7,18 +7,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
 from core.articles import Article
+from core.excel import Excel
 from core.logger.Logger import log
 from core.variables import Variables
 
 
 class Nytimes:
     def __init__(self):
+        self.excel = Excel()
         self.count_of_articles: int = 0
         self.browser_lib = Selenium()
         self.variables = Variables()
 
     def open_the_site_by_link(self):
-        # self.browser_lib.open_chrome_browser('https://www.nytimes.com/search?dropmab=false&query=Ukraine&sort=best')
         self.browser_lib.open_chrome_browser('https://www.nytimes.com')
 
     def enter_search_phrase(self):
@@ -50,7 +51,7 @@ class Nytimes:
 
                 if section_name.lower().strip().startswith(input_section):
                     section.click()
-                    log.info(f"Section {section_name} has been selected")
+                    log.info(f"Section {input_section} has been selected")
                     break
             else:
                 raise ValueError(f"Section '{input_section}' not found")
@@ -112,20 +113,13 @@ class Nytimes:
     def get_articles(self):
         article_element_locator = '//li[@data-testid="search-bodega-result"]/div'
         articles = self.browser_lib.find_elements(article_element_locator)
-        for article in articles:
-            Article(article).save_data_to_exel()
-
-    def get_values(self):
-        pass
-
-    def store_in_excel_file(self):
-        pass
-
-    def download_news_picture(self):
-        pass
-
-    def store_screenshot(self):
-        self.browser_lib.screenshot(filename='output/screenshot.png')
+        log.info("Storing articles")
+        for article_element in articles:
+            article = Article(article_element, self.variables, self.excel)
+            article.get_values()
+            article.download_news_picture()
+            article.save_to_excel()
+        log.info('Complete')
 
     def execute(self):
         try:
@@ -136,6 +130,5 @@ class Nytimes:
             self.set_date_range()
             self.show_all_articles()
             self.get_articles()
-            self.store_screenshot()
         finally:
             self.browser_lib.close_all_browsers()
