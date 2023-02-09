@@ -13,7 +13,6 @@ from core.variables import Variables
 class Article:
     title: str
     description: str
-    date: datetime = datetime.date.today()
     picture_path: str = ''
     count_of_search_phrase: int = 0
     has_any_amount_of_money: int = 0
@@ -24,6 +23,7 @@ class Article:
         self.description_element: WebElement = article.find_element(By.CLASS_NAME, 'css-16nhkrn')
         self.picture_element = article.find_element(By.TAG_NAME, "img")
         self.excel = excel
+        self.date: datetime = datetime.date.today()
         self.variables = variables
 
     def get_values(self):
