@@ -138,6 +138,7 @@ class Nytimes:
 
     def archive_result(self):
         Archive().archive_folder_with_zip('result', 'output/result.zip', recursive=True)
+        log.info("Results has been saved")
 
     def execute(self):
         try:
