@@ -94,6 +94,7 @@ class Nytimes:
         article_element_locator = '//li[@data-testid="search-bodega-result"]'
         self._get_count_of_articles()
         while True:
+            self.browser_lib.scroll_element_into_view(article_element_locator)
             current_element_count = self.browser_lib.get_element_count(article_element_locator)
             if self.count_of_articles > current_element_count:
                 self.browser_lib.click_element(show_more_button_locator)
