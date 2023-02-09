@@ -2,6 +2,7 @@ import datetime
 import os
 import re
 
+from RPA.Archive import Archive
 from RPA.Browser.Selenium import Selenium
 from dateutil.relativedelta import relativedelta
 from selenium.webdriver.common.by import By
@@ -12,8 +13,11 @@ from core.excel import Excel
 from core.logger.Logger import log
 from core.variables import Variables
 
+
 class Nytimes:
     def __init__(self):
+        os.mkdir('output/result')
+        os.mkdir('output/result/image')
         self.excel = Excel()
         self.count_of_articles: int = 0
         self.browser_lib = Selenium()
@@ -128,6 +132,9 @@ class Nytimes:
     def store_screenshot(self):
         self.browser_lib.screenshot(filename="output/screenshot.png")
 
+    def archive_result(self):
+        Archive().archive_folder_with_zip('output/result', 'output/result.zip')
+
     def execute(self):
         try:
             self.open_the_site_by_link()
@@ -137,5 +144,6 @@ class Nytimes:
             self.set_date_range()
             self.show_all_articles()
             self.get_articles()
+            self.archive_result()
         finally:
             self.browser_lib.close_all_browsers()

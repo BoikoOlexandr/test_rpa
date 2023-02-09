@@ -7,7 +7,7 @@ def main():
         bot = Nytimes()
         bot.execute()
     except Exception as e:
-        log.error(e.with_traceback())
+        log.error(e)
 
 
 if __name__ == "__main__":

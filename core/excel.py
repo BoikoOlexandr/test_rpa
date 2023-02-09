@@ -13,7 +13,7 @@ class Excel:
 
     def __init__(self):
         self.book = Workbook()
-        self.path = 'output/result.xlsx'
+        self.path = 'output/result/result.xlsx'
         self.sheet = self.book.active
         header = ('title',
                   'date',
