@@ -1,4 +1,5 @@
 import datetime
+import os
 import re
 
 from RPA.Browser.Selenium import Selenium
@@ -18,6 +19,7 @@ class Nytimes:
         self.count_of_articles: int = 0
         self.browser_lib = Selenium()
         self.variables = Variables()
+        os.mkdir('output/image')
 
     def open_the_site_by_link(self):
         self.browser_lib.open_chrome_browser('https://www.nytimes.com')
