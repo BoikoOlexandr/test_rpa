@@ -23,7 +23,7 @@ class Nytimes:
 
     def open_the_site_by_link(self):
         self.browser_lib.open_chrome_browser('https://www.nytimes.com')
-        accept_cookies_locator = "//*[text()='Accept']"
+        accept_cookies_locator = "//button[text()='Accept']"
         if self.browser_lib.is_element_visible(accept_cookies_locator):
             self.browser_lib.click_element(accept_cookies_locator)
             log.info('Cookies has been accepted')
